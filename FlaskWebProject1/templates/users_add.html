@@ -1,0 +1,70 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+
+<h2>Add a user</h2>
+
+
+<form method="post" enctype="multipart/form-data">
+
+    <label for="fn">First Name</label>
+    <input id="fn" type="text" name="name" required />
+    <br />
+
+    <label for="fn">Last Name</label>
+    <input id="fn" type="text" name="last_name" required />
+    <br />
+
+    <label for="fn">DOB</label>
+    <input id="fn" type="date" name="DOB" required />
+    <br />
+
+    <label for="fn">year level</label>
+    <input id="fn" type="text" name="year_level" required />
+    <br />
+
+    <label for="fn">house</label>
+    <input id="fn" type="text" name="house" required />
+    <br />
+
+    <label for="email">email</label>
+    <input id="email" type="text" name="email" required />
+    <p id="message"></p>
+
+    <label for="fn">password</label>
+    <input id="fn" type="password" name="password" required />
+    <br />
+
+    <label for="pic">Profile picture:</label>
+    <input id="pic" type="file" name="avatar" accept="image/*" />
+    <br />
+
+    <input type="submit" value="Sign Up" />
+
+    <script>
+        let emailInput = document.querySelector('#email');
+        let message = document.querySelector("#message");
+
+        emailInput.addEventListener('input', checkUniqueEmail);
+
+        async function checkUniqueEmail() {
+
+            let response = await fetch("/checkemail?email=" + emailInput.value)
+            let json = await response.json();
+
+            if (json.status == 'OK') {
+                message.style.color = 'green';
+                message.textContent = 'Email is available';
+            } else {
+                message.style.color = 'red';
+                message.textContent = 'Email is taken';
+            }
+
+
+        }
+    </script>
+
+</form>
+{% endblock %}
+
+{# Jinja comment #}

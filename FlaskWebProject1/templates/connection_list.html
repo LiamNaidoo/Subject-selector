@@ -1,0 +1,16 @@
+{% extends '_layout.html' %}
+
+{% block title %}View profile{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr> <th> user ID </th> <th> subject ID </th> </tr>
+    {% for row in result %}
+    <tr>
+        <td>{{row.user_id}}</td>
+        <td> {{ row.subject_id }} </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

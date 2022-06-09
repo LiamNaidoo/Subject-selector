@@ -1,0 +1,46 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+
+<h2>Edit {{ result.name}} {{ result.last_name}}</h2>
+
+<form method="post" enctype="multipart/form-data">
+
+    <label for="id" type="hidden">ID: </label>
+    <input id="id" type="hidden" name="id" required value="{{result.id}}" />
+    <input type="hidden" name="old_avatar" required value="{{result.avatar}}" />
+    <br />
+
+    <label for="fn">First Name</label>
+    <input id="fn" type="text" name="first_name" required value="{{ result.name}}" />
+    <br />
+
+    <label for="ln">Last Name</label>
+    <input id="ln" type="text" name="last_name" required value="{{ result.last_name}}" />
+    <br />
+
+    <label for="ln">email</label>
+    <input id="ln" type="email" name="email" required value="{{ result.email}}" />
+    <br />
+
+    <label for="pic">Profile picture:</label>
+    <img class="avatar" src="{{url_for('static', filename='images/' +(result.avatar or 'default.png'))}}" height="32"><br />
+    <input id="pic" type="file" name="avatar" />
+    <br />
+
+    <input type="submit" value="Save changes" />
+
+</form>
+
+<script>
+    let fileInput = document.querySelector('#pic');
+    let image = document.querySelector('.avatar');
+
+    fileInput.addEventListener("change", updateImage);
+
+    function updateImage() {
+        image.src = URL.createObjectURL(fileInput.files[0]);
+    }
+
+</script>
+{% endblock %}

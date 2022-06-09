@@ -3,8 +3,13 @@
 {% block title %} HOME {% endblock title %}
 
 {% block content %}
-<h1>Home page</h1>
+<ul class="btn btn-primary">
+    <a style="text-decoration:none; color:#ffffff" href="{{ url_for('add')}}">Sign up</a>
+</ul>
 
-
-
+{% if session ['role'] == 'admin' %}
+<a href="{{ url_for('list_users')}}">View All Us</a>
+{% elif 'logged_in' in session %}
+<a href="/view?id={{ session['id']}}"> view your account</a>
+{% endif %}
 {% endblock %}
