@@ -33,7 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
-    <Content Include="static\images\custom.css" />
+    <Content Include="static\custom.css" />
     <Content Include="templates\index.html" />
     <Content Include="templates\add_subject.html" />
     <Content Include="templates\login.html" />

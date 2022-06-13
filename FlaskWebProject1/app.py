@@ -30,6 +30,11 @@ def restrict():
 def home():
     return render_template('index.html')
 
+
+
+
+
+
 # TODO: Add a '/profile' (view_user) route that uses SELECT
 
 
@@ -53,9 +58,9 @@ def login():
                 result = cursor.fetchone()
         if result:
             session['logged_in'] = True
-            session['first_name'] = result['first_name']
+            session['first_name'] = result['name']
             session['role'] = result['role']
-            session['id'] = result['id']
+            session['id'] = result['idusers_table']
             return redirect("/dashboard")
         else:
             flash("Invalid username or password!")
@@ -145,7 +150,7 @@ def list_users():
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM users_table") # selects all from users table in lianaidoo_subject
             result = cursor.fetchall()
-    return render_template('users_list.html',result=result) # returns an html page to get something in the table
+    return render_template('connection_list.html',result=result) # returns an html page to get something in the table
 
 
 
@@ -181,7 +186,7 @@ def add():
             with connection.cursor() as cursor:
                 try:
                     cursor.execute("INSERT INTO users_table (name, last_name, DOB, year_level, house, email, password, avatar) VALUE (%s, %s, %s, %s, %s, %s, %s, %s)",(
-                        request.form['name'],request.form['last_name'], request.form['email'], encrypted_password, avatar_filename))
+                        request.form['name'],request.form['last_name'],request.form['DOB'],request.form['year_level'],request.form['house'], request.form['email'], encrypted_password, avatar_filename))
                 except pymysql.err.IntegrityError:
                     flash("example")
                     return redirect('/register')
