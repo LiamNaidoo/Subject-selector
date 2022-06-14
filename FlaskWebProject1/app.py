@@ -19,7 +19,6 @@ def restrict():
     ]
     admin_only = [
         'lists_users'
-        'movies_list'
         'connection_list'
         ]
 
@@ -58,7 +57,7 @@ def login():
                 result = cursor.fetchone()
         if result:
             session['logged_in'] = True
-            session['first_name'] = result['name']
+            session['name'] = result['name']
             session['role'] = result['role']
             session['id'] = result['idusers_table']
             return redirect("/dashboard")
@@ -108,7 +107,7 @@ def edit():
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute("""UPDATE users_table SET
-                                first_name = %s,
+                                name = %s,
                                 last_name = %s,
                                 email = %s,
                                 avatar = %s
@@ -118,7 +117,7 @@ def edit():
       
                                 
                                 ,(
-                     request.form['first_name'],
+                     request.form['name'],
                      request.form['last_name'],
                      request.form['email'],
                      avatar_filename,
@@ -141,7 +140,7 @@ def edit():
                 result = cursor.fetchone()
         return render_template('edit.html', result=result)
 
-# dashboard route
+# Admin user dashboard route 
 @app.route('/dashboard')
 def list_users():
     if session['role'] != 'admin':
@@ -149,19 +148,6 @@ def list_users():
     with create_connection() as connection:
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM users_table") # selects all from users table in lianaidoo_subject
-            result = cursor.fetchall()
-    return render_template('connection_list.html',result=result) # returns an html page to get something in the table
-
-
-
-# connection_list route
-@app.route('/connect')
-def connection_list():
-    if session['role'] != 'admin':
-        return redirect('/')
-    with create_connection() as connection:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM connect") # selects all from connect table in lianaidoo_avatr
             result = cursor.fetchall()
     return render_template('connection_list.html',result=result) # returns an html page to get something in the table
 
