@@ -59,7 +59,7 @@ def login():
             session['logged_in'] = True
             session['name'] = result['name']
             session['role'] = result['role']
-            session['id'] = result['idusers_table']
+            session['id'] = result['id']
             return redirect("/dashboard")
         else:
             flash("Invalid username or password!")

@@ -11,11 +11,11 @@
             <tr> <th> id </th> <th> first name </th> <th> Last name </th> <th> email </th> <th> password </th> <th> avatar </th> <th> Delete </th> <th> Edit </th> <th> view </th> <th> Add movie </th> </tr>
             {% for row in result %}
             <tr>
-                <td>{{row.idusers_table}}</td>
+                <td>{{row.id}}</td>
                 <td> {{ row.name }} </td>
                 <td>{{ row.last_name }}</td>
                 <td> {{ row.email }}</td>
-                <td> {{ row.password}}</td>
+                <td> {{ row.password }}</td>
                 <td><img src="{{ url_for('static', filename='images/' + (row.avatar or 'default.png')) }}" height="50" width="50"></td>
 
 
@@ -44,9 +44,9 @@
             </tr>
             {% endfor %}
         </table>
-        <ul class="btn btn-success btn-lg">
-            <a style="text-decoration:none; color:#ffffff" href="/register"> Add a new record</a>
-        </ul>
+        
+            <a class="btn btn-success btn-lg" style="width: 1115px" href="/register" role="button">Add a new record</a>
+        
     </div>
 </div>
 
