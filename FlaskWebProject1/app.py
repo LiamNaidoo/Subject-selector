@@ -27,7 +27,12 @@ def restrict():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM subject_table")
+            result = cursor.fetchall()
+
+    return render_template('index.html', result = result)
 
 
 
@@ -194,7 +199,7 @@ def add_movie():
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 try:
-                    cursor.execute("INSERT INTO subeject_table (subject_name, period, subject_code,) VALUES (%s, %s, %s)",(
+                    cursor.execute("INSERT INTO subject_table (subject_name, period, subject_code) VALUES (%s, %s, %s)",(
                         request.form['subject_name'],request.form['period'], request.form['subject_code']))
                 except pymysql.err.IntegrityError:
                     flash("example")
@@ -203,7 +208,7 @@ def add_movie():
                 connection.commit()
                 cursor.execute("SELECT * FROM subject_table WHERE subject_name = %s", request.form['subject_name'])
                 result = cursor.fetchone()
-                subject_id = result['id_subject']
+                subject_id = result['id']
 
                 cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)",(request.args['id'], subject_id))
                 connection.commit()

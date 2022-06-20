@@ -12,4 +12,18 @@
 {% elif 'logged_in' in session %}
 <a href="/view?id={{ session['id']}}"> view your account</a>
 {% endif %}
+
+<table class="styled-table">
+    <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> </tr>
+    {% for row in result %}
+    <tr>
+        <td>{{row.idsubject}}</td>
+        <td> {{ row.subject_name }} </td>
+        <td>{{ row.period }}</td>
+        <td> {{ row.subject_code }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="add_subject?id={{result.id}}">Add another subject</a>
 {% endblock %}

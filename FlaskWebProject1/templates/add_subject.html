@@ -1,11 +1,28 @@
-<!DOCTYPE html>
+{% extends '_layout.html' %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+{% block content %}
 
-</body>
-</html>
+<h2>Add new subject</h2>
+
+
+<form method="post" enctype="multipart/form-data">
+
+    <label for="mn">subject name</label>
+    <input id="mn" type="text" name="subject_name" required />
+    <br />
+
+    <label for="pe">period</label>
+    <input id="pe" type="text" name="period" required />
+    <br />
+
+    <label for="cd">subject code</label>
+    <input id="cd" type="text" name="subject_code" required />
+    <br />
+
+
+    <input type="submit" value="Submit" />
+
+</form>
+{% endblock %}
+
+{# Jinja comment #}

@@ -8,7 +8,7 @@
     <div class="row">
         <h2>Users list</h2>
         <table class="styled-table">
-            <tr> <th> id </th> <th> first name </th> <th> Last name </th> <th> email </th> <th> password </th> <th> avatar </th> <th> Delete </th> <th> Edit </th> <th> view </th> <th> Add movie </th> </tr>
+            <tr> <th> id </th> <th> first name </th> <th> Last name </th> <th> email </th> <th> password </th> <th> avatar </th> <th> Delete </th> <th> Edit </th> <th> view </th> <th> Add subject </th> </tr>
             {% for row in result %}
             <tr>
                 <td>{{row.id}}</td>
@@ -36,7 +36,7 @@
 
                 <td>
                     <a href="/add_movie?id={{row.id}}">
-                        Add movie
+                        add subject
                     </a>
 
                 </td>
