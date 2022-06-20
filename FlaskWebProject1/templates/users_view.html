@@ -4,23 +4,23 @@
 
 {% block content %}
 
-<h1>{{ result[0].first_name }} {{ result[0].last_name }}</h1>
+<h1>{{ result.name }} {{ result.last_name }}</h1>
 
-<p><a href="mailto:{{ result[0].email }}">{{ result[0].email }}</a></p>
+<p><a href="mailto:{{ result.email }}">{{ result.email }}</a></p>
 
 <img src="{{ url_for('static', filename='images/' + (result.avatar or 'default.png')) }}" height="250" width="250">
 
 <p>
-    <a href="/edit?id={{ result[0].id}}">Edit</a>
-    <a href="/delete?id={{ result[0].id }}">Delete</a>
+    <a href="/edit?id={{ result.id}}">Edit</a>
+    <a href="/delete?id={{ result.id }}">Delete</a>
 </p>
 <p>
     <a href="{{ url_for('list_users') }}">Back to dashboard</a>
 </p>
 
-<h2> Subejcts selected by {{ result[0].name }} {{ result[0].last_name }} </h2>
+<h2> Subejcts selected by {{ result.name }} {{ result.last_name }} </h2>
 
-<a href="add_movie?id={{result[0].id}}">Add another subject</a>
+<a href="add_movie?id={{result.id}}">Add another subject</a>
 <table class="styled-table">
     <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> </tr>
     {% for row in result %}

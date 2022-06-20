@@ -219,9 +219,9 @@ def view_user():
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM users_table WHERE id=%s", request.args['id'])
             result = cursor.fetchone()
-            cursor.execute("select * from lianaidoo_subject.users_table join connect on connect.user_id = users_table.id join movie_table on movie_table.idmovie_table = connect.movie_id WHERE users_table.id=%s", request.args['id'])
+            cursor.execute("select * from lianaidoo_subject.users_table join connect on connect.user_id = users_table.id join subject_table on subject_table.id = connect.subject_id WHERE users_table.id=%s", request.args['id'])
             result = cursor.fetchall()
-            
+            print(result)
     return render_template('users_view.html', result=result)
 
 
