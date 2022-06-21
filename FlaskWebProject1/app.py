@@ -38,12 +38,6 @@ def home():
 
 
 
-
-# TODO: Add a '/profile' (view_user) route that uses SELECT
-
-
-# TODO: Add a '/delete_user' route that uses DELETE
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -74,36 +68,36 @@ def login():
         return render_template('login.html')
 
 # logout function
-@app.route('/logout')
+@app.route('/logout')                   # route name is called /logout
 def logout():
     session.clear()
-    return redirect('/')
+    return redirect('/')                # returns page to a random route (page)
 
 # delete function
-@app.route('/delete')
+@app.route('/delete')                            # route name is called /delete
 def delete():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("DELETE FROM users_table WHERE id = %s", request.args['id'])
+            cursor.execute("DELETE FROM users_table WHERE id = %s", request.args['id'])           # Deletes a selected row from users_table
             connection.commit()
-    return redirect('/dashboard')
+    return redirect('/dashboard')                  #returns to /dashboard route once deleted a row from users_table
 
 
 
-# TODO: Add an '/edit_user' route that uses UPDATE
-@app.route('/edit', methods =['GET','POST'])
+# edit_user route that 
+@app.route('/edit', methods =['GET','POST'])                   # route name is called /edit
 def edit():
-    # admin users with the right id are allowed,
-    # Everyone else will receive error 404 
-    if session['role'] != 'admin' and str(session['id']) != request.args['id']:
-        return abort(403)
+                                            
+    
+    if session['role'] != 'admin' and str(session['id']) != request.args['id']:         # admin users with the right id are allowed,
+        return abort(403)                                                             #Everyone else will receive error 403 if they have don't have th right id
     if request.method == 'POST':
         if request.files['avatar'].filename:
             avatar_image = request.files["avatar"]
             ext = os.path.splitext(avatar_image.filename)[1]
             avatar_filename = str(uuid.uuid4())[:8] + ext
             avatar_image.save("static/images/" + avatar_filename)
-            if request.form['old_avatar'] != 'None' and os.path.exists("static/images/" + request.form['old_avatar']):
+            if request.form['old_avatar'] != 'None' and os.path.exists("static/images/" + request.form['old_avatar']):            # 
                 os.remove("static/images/" + request.form['old_avatar'])
             elif request.form['old_avatar'] != 'None':
                 avatar_filename = request.form['old_avatar']
@@ -127,7 +121,6 @@ def edit():
                      request.form['email'],
                      avatar_filename,
                      request.form['id'])
-                         # Add this row
                     )
 
 

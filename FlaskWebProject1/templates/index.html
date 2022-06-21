@@ -13,6 +13,7 @@
 <a href="/view?id={{ session['id']}}"> view your account</a>
 {% endif %}
 
+{% if session ['role'] == 'user' %}
 <table class="styled-table">
     <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> </tr>
     {% for row in result %}
@@ -21,9 +22,11 @@
         <td> {{ row.subject_name }} </td>
         <td>{{ row.period }}</td>
         <td> {{ row.subject_code }}</td>
+        <td><a href="/select?id={{row.id}}">Select this subject</a></td>
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
 <a href="add_subject?id={{result.id}}">Add another subject</a>
 {% endblock %}
