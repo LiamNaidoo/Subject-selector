@@ -182,7 +182,13 @@ def add():
         return render_template('users_add.html')
 
 
-
+@app.route('/select', methods=['GET', 'POST'] )
+def select():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)",(session['id'],request.args['id']))
+            connection.commit()
+    return redirect('/dashboard')  
 
 # ADD SUBJECT FROM USER
 @app.route('/add_subject', methods=['GET', 'POST'] )
@@ -207,10 +213,11 @@ def add_movie():
                 connection.commit()
             return redirect('/')
         return 'success'
+
     else:
         return render_template('add_subject.html')
 
-
+# VIEW USER ROUTE
 @app.route('/view')
 def view_user():
     with create_connection() as connection:

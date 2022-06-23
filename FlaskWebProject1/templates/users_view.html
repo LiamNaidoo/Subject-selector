@@ -3,7 +3,7 @@
 {% block title %}View profile{% endblock %}
 
 {% block content %}
-
+<!--detail of --->
 <h1>{{ result.name }} {{ result.last_name }}</h1>
 
 <p><a href="mailto:{{ result.email }}">{{ result.email }}</a></p>
@@ -21,6 +21,8 @@
 <h2> Subejcts selected by {{ result.name }} {{ result.last_name }} </h2>
 
 <a href="add_movie?id={{result.id}}">Add another subject</a>
+
+<!--Subject table--->
 <table class="styled-table">
     <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> </tr>
     {% for row in result %}
