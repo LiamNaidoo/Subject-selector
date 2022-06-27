@@ -8,6 +8,7 @@ from utils import create_connection, setup
 app.register_blueprint(setup)
 
 
+#restricted pages
 @app.before_request
 def restrict():
     restricted_pages = [

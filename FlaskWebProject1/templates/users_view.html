@@ -1,11 +1,8 @@
 {% extends '_layout.html' %}
-
 {% block title %}View profile{% endblock %}
-
 {% block content %}
-<!--detail of --->
-<h1>{{ result.name }} {{ result.last_name }}</h1>
 
+<h1>{{ result.name }} {{ result.last_name }}</h1>
 <p><a href="mailto:{{ result.email }}">{{ result.email }}</a></p>
 
 <img src="{{ url_for('static', filename='images/' + (result.avatar or 'default.png')) }}" height="250" width="250">
@@ -14,15 +11,21 @@
     <a href="/edit?id={{ result.id}}">Edit</a>
     <a href="/delete?id={{ result.id }}">Delete</a>
 </p>
+
+<!--Heads back to list_users.html page--->
 <p>
     <a href="{{ url_for('list_users') }}">Back to dashboard</a>
 </p>
 
+<!--Name of user and the subjects selected by the user with the same ID--->
 <h2> Subejcts selected by {{ result.name }} {{ result.last_name }} </h2>
 
+<!--Add in another subject to the user with the same ID-->
 <a href="add_movie?id={{result.id}}">Add another subject</a>
 
-<!--Subject table--->
+
+<!--Subject table of user who chose specific subject-->
+<!--Table uses a custom div using css-->
 <table class="styled-table">
     <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> </tr>
     {% for row in result %}
@@ -37,14 +40,3 @@
 
 
 {% endblock %}
-<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>

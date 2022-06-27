@@ -4,6 +4,7 @@
 
 <h2>Edit {{ result.name}} {{ result.last_name}}</h2>
 
+<!--saving changes to the database-->
 <form method="post" enctype="multipart/form-data">
 
     <label for="id" type="hidden">ID: </label>
@@ -32,6 +33,7 @@
 
 </form>
 
+<!--Javascript cotains updates to most recent avatar-->
 <script>
     let fileInput = document.querySelector('#pic');
     let image = document.querySelector('.avatar');
