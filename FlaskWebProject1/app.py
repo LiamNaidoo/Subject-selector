@@ -24,16 +24,19 @@ def restrict():
         ]
 
     if 'logged_in' not in session and request.endpoint in restricted_pages:
-        return redirect('/login')
+        return redirect('/login')       #Returns user to login route.
+
 
 @app.route('/')
 def home():
     with create_connection() as connection:
         with connection.cursor() as cursor:
+
+            #Select all from subject_table 
             cursor.execute("SELECT * FROM subject_table")
             result = cursor.fetchall()
 
-    return render_template('index.html', result = result)
+    return render_template('index.html', result = result)           #Returns user to Index.html (Home)
 
 
 
@@ -48,6 +51,8 @@ def login():
 
         with create_connection() as connection:
             with connection.cursor() as cursor:
+
+                # Selects all from user_table where email and password is unique
                 sql = "SELECT * FROM users_table WHERE email=%s AND password=%s"
                 values = (
                     request.form['email'],
@@ -69,36 +74,38 @@ def login():
         return render_template('login.html')
 
 # logout function
-@app.route('/logout')                   # route name is called /logout
+@app.route('/logout')                   
 def logout():
     session.clear()
-    return redirect('/')                # returns page to a random route (page)
+    return redirect('/')
 
 # delete function
-@app.route('/delete')                            # route name is called /delete
+@app.route('/delete')
 def delete():
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("DELETE FROM users_table WHERE id = %s", request.args['id'])           # Deletes a selected row from users_table
+
+            # Deletes a selected row from users_table
+            cursor.execute("DELETE FROM users_table WHERE id = %s", request.args['id'])                
             connection.commit()
-    return redirect('/dashboard')                  #returns to /dashboard route once deleted a row from users_table
+    return redirect('/dashboard')
 
 
 
 # edit_user route that 
-@app.route('/edit', methods =['GET','POST'])                   # route name is called /edit
+@app.route('/edit', methods =['GET','POST'])
 def edit():
                                             
     
-    if session['role'] != 'admin' and str(session['id']) != request.args['id']:         # admin users with the right id are allowed,
-        return abort(403)                                                             #Everyone else will receive error 403 if they have don't have th right id
+    if session['role'] != 'admin' and str(session['id']) != request.args['id']:
+        return abort(403)                                                                   #Everyone else will receive error 403, error 403 is a forbiden error
     if request.method == 'POST':
         if request.files['avatar'].filename:
             avatar_image = request.files["avatar"]
             ext = os.path.splitext(avatar_image.filename)[1]
             avatar_filename = str(uuid.uuid4())[:8] + ext
             avatar_image.save("static/images/" + avatar_filename)
-            if request.form['old_avatar'] != 'None' and os.path.exists("static/images/" + request.form['old_avatar']):            # 
+            if request.form['old_avatar'] != 'None' and os.path.exists("static/images/" + request.form['old_avatar']):            
                 os.remove("static/images/" + request.form['old_avatar'])
             elif request.form['old_avatar'] != 'None':
                 avatar_filename = request.form['old_avatar']
@@ -133,11 +140,13 @@ def edit():
     else:
         with create_connection() as connection:
             with connection.cursor() as cursor:
+
+                # selects all from users_table where id is unique
                 sql = "SELECT * FROM users_table WHERE id = %s"
                 values = (request.args['id'])
                 cursor.execute(sql,values)
                 result = cursor.fetchone()
-        return render_template('edit.html', result=result)
+        return render_template('edit.html', result=result)              #returns user to edit.html
 
 # Admin user dashboard route 
 @app.route('/dashboard')
@@ -146,19 +155,21 @@ def list_users():
         return redirect('/')
     with create_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM users_table") # selects all from users table in lianaidoo_subject
+            cursor.execute("SELECT * FROM users_table")         # selects all from users_table
             result = cursor.fetchall()
-    return render_template('connection_list.html',result=result) # returns an html page to get something in the table
+    return render_template('connection_list.html',result=result)        # returns user to connection_list.html
 
-# add_user route
+
+# Registration route
 @app.route('/register', methods=['GET', 'POST'] )
 def add():
     if request.method == 'POST':
 
+        #Encrypts password with sha256, which is 64bit
         password = request.form['password']
         encrypted_password = hashlib.sha256(password.encode()).hexdigest()
 
-        
+        # Encoded file Names (Purpose of making unique names so Python doesn't have errors)
         if request.files['avatar'].filename:
             avatar_image = request.files["avatar"]
             ext = os.path.splitext(avatar_image.filename)[1]
@@ -170,6 +181,7 @@ def add():
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 try:
+                    # Inserts values into the users_table to create the user.
                     cursor.execute("INSERT INTO users_table (name, last_name, DOB, year_level, house, email, password, avatar) VALUE (%s, %s, %s, %s, %s, %s, %s, %s)",(
                         request.form['name'],request.form['last_name'],request.form['DOB'],request.form['year_level'],request.form['house'], request.form['email'], encrypted_password, avatar_filename))
                 except pymysql.err.IntegrityError:
@@ -180,16 +192,21 @@ def add():
             return redirect('/')
         return 'success'
     else:
-        return render_template('users_add.html')
+        return render_template('users_add.html')            # returns user to user_add.html
 
 
+
+# Selection route
 @app.route('/select', methods=['GET', 'POST'] )
 def select():
     with create_connection() as connection:
         with connection.cursor() as cursor:
+
+            # Inserts values into connect table for subjects selected
             cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)",(session['id'],request.args['id']))
             connection.commit()
-    return redirect('/dashboard')  
+    return redirect('/dashboard')       # returns user to /dashboard route
+
 
 # ADD SUBJECT FROM USER
 @app.route('/add_subject', methods=['GET', 'POST'] )
@@ -199,6 +216,7 @@ def add_movie():
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 try:
+                    #Inserts values into subject_table to create subject.
                     cursor.execute("INSERT INTO subject_table (subject_name, period, subject_code) VALUES (%s, %s, %s)",(
                         request.form['subject_name'],request.form['period'], request.form['subject_code']))
                 except pymysql.err.IntegrityError:
@@ -206,35 +224,45 @@ def add_movie():
                     return redirect('/register')
 
                 connection.commit()
+
+                #User can select a subject (subject_name) from subject_table
                 cursor.execute("SELECT * FROM subject_table WHERE subject_name = %s", request.form['subject_name'])
                 result = cursor.fetchone()
                 subject_id = result['id']
-
+                
+                #Inserts values into connect to save and store it into database.
                 cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)",(request.args['id'], subject_id))
                 connection.commit()
             return redirect('/')
         return 'success'
 
     else:
-        return render_template('add_subject.html')
+        return render_template('add_subject.html')       # returns user to add_subject.html
 
 # VIEW USER ROUTE
 @app.route('/view')
 def view_user():
     with create_connection() as connection:
         with connection.cursor() as cursor:
+
+            #Selects all from users_table
             cursor.execute("SELECT * FROM users_table WHERE id=%s", request.args['id'])
             result = cursor.fetchone()
+
+            #This make the users_table and subject_table connect together
             cursor.execute("select * from lianaidoo_subject.users_table join connect on connect.user_id = users_table.id join subject_table on subject_table.id = connect.subject_id WHERE users_table.id=%s", request.args['id'])
             result = cursor.fetchall()
             print(result)
-    return render_template('users_view.html', result=result)
+    return render_template('users_view.html', result=result)                   # returns user to users_view.html
 
 
+# Unique route
 @app.route ('/checkemail')
 def check_email():
     with create_connection() as connection:
             with connection.cursor() as cursor:
+                
+                #Selects all from users_table where email is unique
                 sql = "SELECT * FROM users_table WHERE email=%s"
                 values = (
                     request.args['email'],

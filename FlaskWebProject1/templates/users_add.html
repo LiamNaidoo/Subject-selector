@@ -52,10 +52,10 @@
             let response = await fetch("/checkemail?email=" + emailInput.value)
             let json = await response.json();
 
-            if (json.status == 'OK') {
+            if (json.status == 'OK') {                  // if email is unique (new) they can use it
                 message.style.color = 'green';
                 message.textContent = 'Email is available';
-            } else {
+            } else {                                     // else don't use it
                 message.style.color = 'red';
                 message.textContent = 'Email is taken';
             }
