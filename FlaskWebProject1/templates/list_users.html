@@ -7,6 +7,8 @@
 <div class="container">
     <div class="row">
         <h2>Users list</h2>
+        
+        <!--This table is made custom--->
         <table class="styled-table">
             <tr> <th> id </th> <th> first name </th> <th> Last name </th> <th> email </th> <th> password </th> <th> avatar </th> <th> Delete </th> <th> Edit </th> <th> view </th> <th> Add movie </th> </tr>
             {% for row in result %}
@@ -21,7 +23,7 @@
                 <td><img src="{{ url_for('static', filename='images/' + (row.avatar or 'default.png')) }}" height="50" width="50"></td>
 
 
-
+                 <!--Comfirming if admin user want to delete that person--->
                 <td><a href="/delete?id={{ row.id }}" onclick="return confirm('Are you sure you want to delete {{ row.name }} {{ row.last_name }}?')">Delete</a></td>
                 <td>
                     <a href="/edit?id={{row.id}}">
