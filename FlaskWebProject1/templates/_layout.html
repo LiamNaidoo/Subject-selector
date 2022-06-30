@@ -40,6 +40,7 @@
     {% block content %}
     {% endblock %}
 
+    <!--flashing user if they are logged in-->
     {% if 'logged_in' in session %}
     <ul class="signed">
         You are logged in as {{ session.name }}.

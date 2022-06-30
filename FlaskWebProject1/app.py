@@ -202,9 +202,18 @@ def select():
     with create_connection() as connection:
         with connection.cursor() as cursor:
 
-            # Inserts values into connect table for subjects selected
-            cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)",(session['id'],request.args['id']))
-            connection.commit()
+            #prints out the number of subjects selected
+            cursor.execute("SELECT * FROM connect WHERE user_id = %s", session['id'])
+            result = cursor.fetchall()
+            print(len(result))
+
+            if (len(result)) == 5:              # If user has five subjects don't add anymore.
+                 flash("You reached your limit of selected subjects")
+
+            else:
+               # Inserts values into connect table for subjects selected
+                cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)",(session['id'],request.args['id']))
+                connection.commit()
     return redirect('/dashboard')       # returns user to /dashboard route
 
 

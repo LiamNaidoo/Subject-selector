@@ -14,6 +14,8 @@
 {% endif %}
 
 {% if session ['role'] == 'user' %}
+
+<!--Table uses a custom div using css--->
 <table class="styled-table">
     <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> </tr>
     {% for row in result %}
