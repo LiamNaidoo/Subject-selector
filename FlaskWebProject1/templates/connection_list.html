@@ -7,8 +7,13 @@
 <div class="container">
     <div class="row">
         <h2>Users list</h2>
+<<<<<<< HEAD
 
         <!--Table uses a custom div using css-->
+=======
+        
+        <!--This table is made custom--->
+>>>>>>> 854917c8e4c4d8f35bb2f04757b68b396bdea923
         <table class="styled-table">
             <tr> <th> id </th> <th> first name </th> <th> Last name </th> <th> email </th> <th> avatar </th> <th> Delete </th> <th> Edit </th> <th> view </th> <th> Add subject </th> </tr>
             {% for row in result %}
@@ -20,7 +25,11 @@
                 <td><img src="{{ url_for('static', filename='images/' + (row.avatar or 'default.png')) }}" height="50" width="50"></td>
 
 
+<<<<<<< HEAD
                 <!--confirming user if they want to delete user--->
+=======
+                  <!--confirming user if they want to delete user--->
+>>>>>>> 854917c8e4c4d8f35bb2f04757b68b396bdea923
                 <td><a href="/delete?id={{ row.id }}" onclick="return confirm('Are you sure you want to delete {{ row.first_name }} {{ row.last_name }}?')">Delete</a></td>
                 <td>
                     <a href="/edit?id={{row.id}}">
