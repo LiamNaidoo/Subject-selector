@@ -20,7 +20,7 @@
                 <td><img src="{{ url_for('static', filename='images/' + (row.avatar or 'default.png')) }}" height="50" width="50"></td>
 
 
-                <!--confirming user if they want to delete user--->
+                <!--confirming Admin user if they want to delete user--->
                 <td><a href="/delete?id={{ row.id }}" onclick="return confirm('Are you sure you want to delete {{ row.first_name }} {{ row.last_name }}?')">Delete</a></td>
                 <td>
                     <a href="/edit?id={{row.id}}">

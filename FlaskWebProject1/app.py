@@ -91,6 +91,17 @@ def delete():
     return redirect('/dashboard')
 
 
+# delete subject function
+@app.route('/delete_subject')
+def delete_subject():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+
+            # Deletes a selected row from connect table
+            cursor.execute("DELETE FROM connect WHERE subject_id = %s AND user_id = %s", (request.args['id'],session['id']))                
+            connection.commit()
+    return redirect(f"/view?id={session['id']}")
+
 
 # edit_user route that 
 @app.route('/edit', methods =['GET','POST'])
@@ -209,6 +220,9 @@ def select():
 
             if (len(result)) == 5:              # If user has five subjects don't add anymore.
                  flash("You reached your limit of selected subjects")
+
+            elif (len(result)) >= 5:              # If user has five subjects don't add anymore.
+                 flash("You already reached your limit of selected subjects")
 
             else:
                # Inserts values into connect table for subjects selected
