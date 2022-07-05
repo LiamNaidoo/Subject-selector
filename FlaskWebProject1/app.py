@@ -92,10 +92,20 @@ def delete_subject():
     with create_connection() as connection:
         with connection.cursor() as cursor:
 
-            # Deletes a selected row from connect table
+            # Deletes a selected row from connect table by user who selected it
             cursor.execute("DELETE FROM connect WHERE subject_id = %s AND user_id = %s", (request.args['id'], session['id']))
             connection.commit()
     return redirect(f"/view?id={session['id']}")
+
+# delete subject function
+@app.route('/admin_delete')
+def admin_delete():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            # Deletes a selected row from connect table
+            cursor.execute("DELETE FROM subject_table WHERE id = %s ", (request.args['id']))
+            connection.commit()
+    return redirect('/')
 
 
 # edit_user route that

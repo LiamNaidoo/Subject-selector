@@ -36,7 +36,7 @@
         <td> {{ row.subject_code }}</td>
 
         <!--confirming user if they want to delete subject--->
-        <td><a href="/delete_subject?id={{ row.subject_id }}" onclick="return confirm('Are you sure you want to delete {{ row.subject_name }}?')">Delete</a></td>
+        <td><a href="/admin_delete?id={{ row.subject_id }}" onclick="return confirm('Are you sure you want to delete {{ row.subject_name }}?')">Delete</a></td>
     </tr>
     {% endfor %}
 </table>

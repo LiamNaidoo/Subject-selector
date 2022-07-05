@@ -8,7 +8,9 @@
 </ul>
 
 {% if session ['role'] == 'admin' %}
-<a href="{{ url_for('list_users')}}">View All Us</a>
+<ul class="btn btn-success">
+    <a style="text-decoration:none; color:#ffffff" href="{{ url_for('list_users')}}">View All Us</a>
+</ul>
 {% elif 'logged_in' in session %}
 <a href="/view?id={{ session['id']}}"> view your account</a>
 {% endif %}
@@ -25,6 +27,23 @@
         <td>{{ row.period }}</td>
         <td> {{ row.subject_code }}</td>
         <td><a href="/select?id={{row.id}}">Select this subject</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% elif session ['role'] == 'admin' %}
+
+<!--Table uses a custom div using css--->
+<table class="styled-table">
+
+    <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> <th> Delete </th> </tr>
+    {% for row in result %}
+    <tr>
+        <td>{{row.idsubject}}</td>
+        <td> {{ row.subject_name }} </td>
+        <td>{{ row.period }}</td>
+        <td> {{ row.subject_code }}</td>
+        <td><a href="/admin_delete?id={{ row.id }}" onclick="return confirm('Are you sure you want to delete {{ row.subject_name }}?')">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
