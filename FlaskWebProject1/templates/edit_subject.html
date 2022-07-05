@@ -1,0 +1,30 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+
+<h2>Edit {{ result.subject_name}}</h2>
+
+<!--saving changes to the database-->
+<form method="post" enctype="multipart/form-data">
+
+    <label for="id" type="hidden">ID: </label>
+    <input id="id" type="hidden" name="id" required value="{{result.id}}" />
+    <br />
+
+    <label for="sb">Subject Name</label>
+    <input id="sb" type="text" name="subject_name" required value="{{ result.subject_name}}" />
+    <br />
+
+    <label for="pr">Period</label>
+    <input id="pr" type="text" name="period" required value="{{ result.period}}" />
+    <br />
+
+    <label for="sc">Subject code</label>
+    <input id="sc" type="text" name="subject_code" required value="{{ result.subject_code}}" />
+    <br />
+
+    <input type="submit" value="Save changes" />
+
+</form>
+
+{% endblock %}

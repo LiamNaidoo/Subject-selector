@@ -35,6 +35,7 @@
   <ItemGroup>
     <Content Include="requirements.txt" />
     <Content Include="static\custom.css" />
+    <Content Include="templates\edit_subject.html" />
     <Content Include="templates\index.html" />
     <Content Include="templates\add_subject.html" />
     <Content Include="templates\login.html" />

@@ -162,6 +162,52 @@ def edit():
                 result = cursor.fetchone()
         return render_template('edit.html', result=result)              # returns user to edit.html
 
+
+
+
+# edit_subject route that
+@app.route('/edit_subject', methods =['GET', 'POST'])
+def edit_subject():
+
+
+    if session['role'] != 'admin' and str(session['id']) != request.args['id']:
+        return abort(403)                                                                   # Everyone else will receive error 403, error 403 is a forbiden error
+    if request.method == 'POST':
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute("""UPDATE subject_table SET
+                                subeject_name = %s,
+                                period = %s,
+                                subject_code = %s,
+                              WHERE id = %s
+                                """
+
+                                ,(
+                     request.form['subject_name'],
+                     request.form['subject_code'],
+                     request.form['id'])
+                    )
+
+
+
+
+                connection.commit()
+            return redirect('/')
+        return 'success'
+    else:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+
+                # selects all from users_table where id is unique
+                sql = "SELECT * FROM subject_table WHERE id = %s"
+                values = (request.args['id'])
+                cursor.execute(sql, values)
+                result = cursor.fetchone()
+        return render_template('edit_subject.html', result=result)              # returns user to edit_subject.html
+
+
+
+
 # Admin user dashboard route
 @app.route('/dashboard')
 def list_users():
@@ -235,6 +281,8 @@ def select():
 # ADD SUBJECT FROM USER
 @app.route('/add_subject', methods=['GET', 'POST'])
 def add_movie():
+    if session['role'] != 'admin':
+        return redirect('/')
     if request.method == 'POST':
 
         with create_connection() as connection:
@@ -249,14 +297,6 @@ def add_movie():
 
                 connection.commit()
 
-                # User can select a subject (subject_name) from subject_table
-                cursor.execute("SELECT * FROM subject_table WHERE subject_name = %s", request.form['subject_name'])
-                result = cursor.fetchone()
-                subject_id = result['id']
-
-                # Inserts values into connect to save and store it into database.
-                cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)", (request.args['id'], subject_id))
-                connection.commit()
             return redirect('/')
         return 'success'
 
