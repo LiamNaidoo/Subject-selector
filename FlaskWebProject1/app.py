@@ -103,7 +103,7 @@ def admin_delete():
     with create_connection() as connection:
         with connection.cursor() as cursor:
             # Deletes a selected row from connect table
-            cursor.execute("DELETE FROM subject_table WHERE id = %s ", (request.args['id']))
+            cursor.execute("DELETE FROM connect WHERE connect_id = %s ", (request.args['id']))
             connection.commit()
     return redirect('/')
 
@@ -176,14 +176,15 @@ def edit_subject():
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute("""UPDATE subject_table SET
-                                subeject_name = %s,
+                                subject_name = %s,
                                 period = %s,
-                                subject_code = %s,
+                                subject_code = %s
                               WHERE id = %s
                                 """
 
                                 ,(
                      request.form['subject_name'],
+                     request.form['period'],
                      request.form['subject_code'],
                      request.form['id'])
                     )
