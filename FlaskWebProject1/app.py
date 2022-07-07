@@ -1,5 +1,6 @@
 import pymysql
 import uuid, os, hashlib
+from datetime import date, datetime
 from flask import Flask, render_template, request, redirect, session, abort, flash, jsonify
 app = Flask(__name__)
 
@@ -261,22 +262,31 @@ def select():
     with create_connection() as connection:
         with connection.cursor() as cursor:
 
-            # prints out the number of subjects selected
-            cursor.execute("SELECT * FROM connect WHERE user_id = %s", session['id'])
-            result = cursor.fetchall()
-            print(len(result))
+            today = date.today()                           # Current day
+            print("Today's date:", today)
+            end_date = date(2022, 7, 8)                     # due date
 
-            if (len(result)) == 5:              # If user has five subjects don't add anymore.
-                flash("You reached your limit of selected subjects")
-
-            elif (len(result)) >= 5:              # If user has five subjects don't add anymore.
-                flash("You already reached your limit of selected subjects")
+            if today > end_date:                            # If user has exceeded end_date, don't select 
+                flash("You ran out of time!")
+                return redirect('/')
 
             else:
-                # Inserts values into connect table for subjects selected
-                cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)", (session['id'], request.args['id']))
-                connection.commit()
-    return redirect('/dashboard')       # returns user to /dashboard route
+                # prints out the number of subjects selected
+                cursor.execute("SELECT * FROM connect WHERE user_id = %s", session['id'])
+                result = cursor.fetchall()
+                print(len(result))
+
+                if (len(result)) == 5:              # If user has five subjects don't add anymore.
+                    flash("You reached your limit of selected subjects")
+
+                elif (len(result)) >= 5:              # If user has five subjects don't add anymore.
+                    flash("You already reached your limit of selected subjects")
+
+                else:
+                    # Inserts values into connect table for subjects selected
+                    cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)", (session['id'], request.args['id']))
+                    connection.commit()
+        return redirect('/dashboard')       # returns user to /dashboard route
 
 
 # ADD NEW SUBJECT
