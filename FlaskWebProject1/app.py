@@ -107,6 +107,16 @@ def admin_delete():
             connection.commit()
     return redirect('/')
 
+# delete user from subject function
+@app.route('/delete_user')
+def delete_user():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+
+            # Deletes a selected row from connect table by user who selected it
+            cursor.execute("DELETE FROM connect WHERE subject_id = %s AND user_id = %s", (request.args['id'], session['id']))
+            connection.commit()
+    return redirect('/')
 
 # edit_user route that
 @app.route('/edit', methods =['GET', 'POST'])
@@ -279,7 +289,7 @@ def select():
     return redirect('/dashboard')       # returns user to /dashboard route
 
 
-# ADD SUBJECT FROM USER
+# ADD NEW SUBJECT 
 @app.route('/add_subject', methods=['GET', 'POST'])
 def add_movie():
     if session['role'] != 'admin':
@@ -319,6 +329,23 @@ def view_user():
             result = cursor.fetchall()
             print(result)
     return render_template('users_view.html', result=result)                   # returns user to users_view.html
+
+
+# VIEW SUBJECT ROUTE
+@app.route('/view_subject')
+def view_subject():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+
+            # Selects all from subject_table
+            cursor.execute("SELECT * FROM subject_table WHERE id=%s", request.args['id'])
+            result = cursor.fetchone()
+
+            # This make the users_table and subject_table connect together
+            cursor.execute("select * from lianaidoo_subject.users_table right join connect on connect.user_id = users_table.id right join subject_table on subject_table.id = connect.subject_id WHERE subject_table.id=%s", request.args['id'])
+            result = cursor.fetchall()
+            print(result)
+    return render_template('subject_view.html', result=result)                   # returns user to subject_view.html
 
 
 # Unique route

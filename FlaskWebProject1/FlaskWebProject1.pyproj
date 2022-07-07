@@ -42,6 +42,7 @@
     <Content Include="templates\edit.html" />
     <Content Include="templates\list_users.html" />
     <Content Include="templates\connection_list.html" />
+    <Content Include="templates\subject_view.html" />
     <Content Include="templates\users_view.html" />
     <Content Include="templates\users_add.html" />
     <Content Include="templates\_layout.html" />

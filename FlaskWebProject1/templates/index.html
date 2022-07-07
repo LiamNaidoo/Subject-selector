@@ -39,7 +39,7 @@
 <!--Table uses a custom div using css--->
 <table class="styled-table">
 
-    <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> <th> edit </th> <th> Delete </th> </tr>
+    <tr> <th> id </th> <th> subject name </th> <th> period </th> <th> subject code </th> <th> edit </th> <th> Delete </th> <th>View class</th> </tr>
     {% for row in result %}
     <tr>
         <td>{{row.idsubject}}</td>
@@ -48,6 +48,7 @@
         <td> {{ row.subject_code }}</td>
         <td><a href="/edit_subject?id={{row.id}}">Edit</a></td>
         <td><a href="/admin_delete?id={{ row.id }}" onclick="return confirm('Are you sure you want to delete {{ row.subject_name }}?')">Delete</a></td>
+        <td><a href="/view_subject?id={{row.id}}">View</a></td>
     </tr>
     {% endfor %}
 </table>

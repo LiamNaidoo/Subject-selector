@@ -1,0 +1,27 @@
+{% extends '_layout.html' %}
+{% block title %}View profile{% endblock %}
+{% block content %}
+
+<!--Name of subject and code-->
+<h1>{{ result[0].subject_name }}</h1>
+<h3>{{ result[0].subject_code }}</h3>
+
+
+<!--Subject table of user who chose specific subject-->
+<!--Table uses a custom div using css-->
+<table class="styled-table">
+    <tr> <th> id </th> <th> first name </th> <th> Last name </th> <th> email </th> <th> avatar </th> <th> remove </th>
+    {% for row in result %}
+    <tr>
+        <td>{{row.id}}</td>
+        <td> {{ row.name }} </td>
+        <td>{{ row.last_name }}</td>
+        <td> {{ row.email }}</td>
+        <td><img src="{{ url_for('static', filename='images/' + (row.avatar or 'default.png')) }}" height="50" width="50"></td>
+        <td><a href="/delete_user?id={{ row.id }}" onclick="return confirm('Are you sure you want to delete {{ row.name }}  {{ row.last_name }} from this class?')">Remove</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}
