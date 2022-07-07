@@ -35,7 +35,8 @@ def home():
             cursor.execute("SELECT * FROM subject_table")
             result = cursor.fetchall()
 
-    return render_template('index.html', result = result)           # Returns user to Index.html (Home)
+    return render_template('index.html', result=result)           # Returns user to Index.html (Home)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -68,11 +69,13 @@ def login():
     else:
         return render_template('login.html')
 
+
 # logout function
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect('/')
+
 
 # delete function
 @app.route('/delete')
@@ -97,6 +100,7 @@ def delete_subject():
             connection.commit()
     return redirect(f"/view?id={session['id']}")
 
+
 # delete subject function
 @app.route('/admin_delete')
 def admin_delete():
@@ -106,6 +110,7 @@ def admin_delete():
             cursor.execute("DELETE FROM connect WHERE connect_id = %s ", (request.args['id']))
             connection.commit()
     return redirect('/')
+
 
 # delete user from subject function
 @app.route('/delete_user')
@@ -118,11 +123,10 @@ def delete_user():
             connection.commit()
     return redirect('/')
 
+
 # edit_user route that
-@app.route('/edit', methods =['GET', 'POST'])
+@app.route('/edit', methods=['GET', 'POST'])
 def edit():
-
-
     if session['role'] != 'admin' and str(session['id']) != request.args['id']:
         return abort(403)                                                                   # Everyone else will receive error 403, error 403 is a forbiden error
     if request.method == 'POST':
@@ -140,23 +144,19 @@ def edit():
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 cursor.execute("""UPDATE users_table SET
-                                name = %s,
-                                last_name = %s,
-                                email = %s,
-                                avatar = %s
-                              WHERE id = %s
-                                """
-
-                                ,(
-                     request.form['name'],
-                     request.form['last_name'],
-                     request.form['email'],
-                     avatar_filename,
-                     request.form['id'])
+                    name = %s,
+                    last_name = %s,
+                    email = %s,
+                    avatar = %s
+                WHERE id = %s
+                    """, (
+                    request.form['name'],
+                    request.form['last_name'],
+                    request.form['email'],
+                    avatar_filename,
+                    request.form['id']
                     )
-
-
-
+                )
 
                 connection.commit()
             return redirect('/')
@@ -173,13 +173,9 @@ def edit():
         return render_template('edit.html', result=result)              # returns user to edit.html
 
 
-
-
 # edit_subject route that
-@app.route('/edit_subject', methods =['GET', 'POST'])
+@app.route('/edit_subject', methods=['GET', 'POST'])
 def edit_subject():
-
-
     if session['role'] != 'admin' and str(session['id']) != request.args['id']:
         return abort(403)                                                                   # Everyone else will receive error 403, error 403 is a forbiden error
     if request.method == 'POST':
@@ -190,17 +186,12 @@ def edit_subject():
                                 period = %s,
                                 subject_code = %s
                               WHERE id = %s
-                                """
-
-                                ,(
+                                """, (
                      request.form['subject_name'],
                      request.form['period'],
                      request.form['subject_code'],
                      request.form['id'])
                     )
-
-
-
 
                 connection.commit()
             return redirect('/')
@@ -215,8 +206,6 @@ def edit_subject():
                 cursor.execute(sql, values)
                 result = cursor.fetchone()
         return render_template('edit_subject.html', result=result)              # returns user to edit_subject.html
-
-
 
 
 # Admin user dashboard route
@@ -265,6 +254,7 @@ def add():
     else:
         return render_template('users_add.html')            # returns user to user_add.html
 
+
 # Selection route
 @app.route('/select', methods=['GET', 'POST'])
 def select():
@@ -277,19 +267,19 @@ def select():
             print(len(result))
 
             if (len(result)) == 5:              # If user has five subjects don't add anymore.
-                 flash("You reached your limit of selected subjects")
+                flash("You reached your limit of selected subjects")
 
             elif (len(result)) >= 5:              # If user has five subjects don't add anymore.
-                 flash("You already reached your limit of selected subjects")
+                flash("You already reached your limit of selected subjects")
 
             else:
-               # Inserts values into connect table for subjects selected
+                # Inserts values into connect table for subjects selected
                 cursor.execute("INSERT INTO connect (user_id, subject_id) VALUES (%s, %s)", (session['id'], request.args['id']))
                 connection.commit()
     return redirect('/dashboard')       # returns user to /dashboard route
 
 
-# ADD NEW SUBJECT 
+# ADD NEW SUBJECT
 @app.route('/add_subject', methods=['GET', 'POST'])
 def add_movie():
     if session['role'] != 'admin':
@@ -313,6 +303,7 @@ def add_movie():
 
     else:
         return render_template('add_subject.html')       # returns user to add_subject.html
+
 
 # VIEW USER ROUTE
 @app.route('/view')

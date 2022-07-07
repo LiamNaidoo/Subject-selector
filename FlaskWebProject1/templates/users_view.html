@@ -2,7 +2,7 @@
 {% block title %}View profile{% endblock %}
 {% block content %}
 
-<h1>{{ result.name }} {{ result.last_name }}</h1>
+<h1>{{ result[0].name }} {{ result[0].last_name }}</h1>
 <p><a href="mailto:{{ result.email }}">{{ result.email }}</a></p>
 
 <img src="{{ url_for('static', filename='images/' + (result.avatar or 'default.png')) }}" height="250" width="250">
@@ -18,7 +18,7 @@
 </p>
 
 <!--Name of user and the subjects selected by the user with the same ID--->
-<h2> Subejcts selected by {{ result.name }} {{ result.last_name }} </h2>
+<h2> Subejcts selected by {{ result[0].name }} {{ result[0].last_name }} </h2>
 
 <!--Add in another subject to the user with the same ID-->
 <a href="add_movie?id={{result.id}}">Add another subject</a>
