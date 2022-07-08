@@ -16,12 +16,16 @@ def restrict():
         'list_users',
         'view_user',
         'edit_user',
-        'delete_user'
+        'delete_user',
+        'connection_list',
+        'edit_subject'
 
     ]
     admin_only = [
         'lists_users'
         'connection_list'
+        'edit_subject'
+
         ]
 
     if 'logged_in' not in session and request.endpoint in restricted_pages:
