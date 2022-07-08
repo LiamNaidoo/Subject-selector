@@ -264,13 +264,13 @@ def select():
 
             today = date.today()                           # Current day
             print("Today's date:", today)
-            start_date = date(2022, 7, 7) 
+            start_date = date(2022, 7, 7)
             end_date = date(2022, 7, 12)                     # due date
 
             if today < start_date:
-                flash("It's too soon! wait for start date" )      #If user has selected before start date, don't select 
-  
-            elif today > end_date:                            # If user has exceeded end_date, don't select 
+                flash("It's too soon! wait for start date")      # If user has selected before start date, don't select
+
+            elif today > end_date:                            # If user has exceeded end_date, don't select
                 flash("It's too late! You ran out of time!")
                 return redirect('/')
 
