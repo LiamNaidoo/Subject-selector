@@ -264,10 +264,10 @@ def select():
 
             today = date.today()                           # Current day
             print("Today's date:", today)
-            end_date = date(2022, 7, 8)                     # due date
+            end_date = date(2022, 7, 9)                     # due date
 
             if today > end_date:                            # If user has exceeded end_date, don't select 
-                flash("You ran out of time!")
+                flash("It's too late! You ran out of time!")
                 return redirect('/')
 
             else:
@@ -326,7 +326,7 @@ def view_user():
             result = cursor.fetchone()
 
             # This make the users_table and subject_table connect together
-            cursor.execute("select * from lianaidoo_subject.users_table join connect on connect.user_id = users_table.id join subject_table on subject_table.id = connect.subject_id WHERE users_table.id=%s", request.args['id'])
+            cursor.execute("select * from lianaidoo_subject.users_table left join connect on connect.user_id = users_table.id left join subject_table on subject_table.id = connect.subject_id WHERE users_table.id=%s", request.args['id'])
             result = cursor.fetchall()
             print(result)
     return render_template('users_view.html', result=result)                   # returns user to users_view.html
