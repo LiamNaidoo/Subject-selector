@@ -101,7 +101,7 @@ def delete_subject():
         with connection.cursor() as cursor:
 
             # Deletes a selected row from connect table by user who selected it
-            cursor.execute("DELETE FROM connect WHERE subject_id = %s AND user_id = %s", (request.args['id'], session['id']))
+            cursor.execute("DELETE FROM connect WHERE connect_id = %s", (request.args['id']))
             connection.commit()
     return redirect(f"/view?id={session['id']}")
 
@@ -112,7 +112,7 @@ def admin_delete():
     with create_connection() as connection:
         with connection.cursor() as cursor:
             # Deletes a selected row from connect table
-            cursor.execute("DELETE FROM connect WHERE connect_id = %s ", (request.args['id']))
+            cursor.execute("DELETE FROM subject_table WHERE id = %s ", (request.args['id']))
             connection.commit()
     return redirect('/')
 
@@ -334,7 +334,9 @@ def view_user():
             result = cursor.fetchone()
 
             # This make the users_table and subject_table connect together
-            cursor.execute("select * from lianaidoo_subject.users_table left join connect on connect.user_id = users_table.id left join subject_table on subject_table.id = connect.subject_id WHERE users_table.id=%s", request.args['id'])
+            cursor.execute("""select * from lianaidoo_subject.users_table left 
+            join connect on connect.user_id = users_table.id left
+            join subject_table on subject_table.id = connect.subject_id WHERE users_table.id=%s""", request.args['id'])
             result = cursor.fetchall()
             print(result)
     return render_template('users_view.html', result=result)                   # returns user to users_view.html
@@ -351,7 +353,8 @@ def view_subject():
             result = cursor.fetchone()
 
             # This make the users_table and subject_table connect together
-            cursor.execute("select * from lianaidoo_subject.users_table right join connect on connect.user_id = users_table.id right join subject_table on subject_table.id = connect.subject_id WHERE subject_table.id=%s", request.args['id'])
+            cursor.execute("""select * from lianaidoo_subject.users_table right join connect on connect.user_id = users_table.id right 
+            join subject_table on subject_table.id = connect.subject_id WHERE subject_table.id=%s""", request.args['id'])
             result = cursor.fetchall()
             print(result)
     return render_template('subject_view.html', result=result)                   # returns user to subject_view.html
