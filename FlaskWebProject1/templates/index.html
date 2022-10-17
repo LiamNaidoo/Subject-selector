@@ -7,16 +7,6 @@
     <a style="text-decoration:none; color:#ffffff" href="{{ url_for('add')}}">Sign up</a>
 </ul>
 
-{% if session ['role'] == 'admin' %}
-<ul class="btn btn-success">
-    <a style="text-decoration:none; color:#ffffff" href="{{ url_for('list_users')}}">View All Us</a>
-</ul>
-{% elif 'logged_in' in session %}
-<ul class="btn btn-success">
-    <a style="text-decoration:none; color:#ffffff" href="/view?id={{ session['id']}}"> view your account</a>
-</ul>
-{% endif %}
-
 {% if session ['role'] == 'user' %}
 
 <!--Table uses a custom div using css--->
@@ -52,8 +42,19 @@
     </tr>
     {% endfor %}
 </table>
+{% if session ['role'] == 'admin' %}
+<ul class="btn btn-success">
+    <a style="text-decoration:none; color:#ffffff" href="{{ url_for('list_users')}}">View all of Us</a>
+</ul>
+{% elif 'logged_in' in session %}
+<ul class="btn btn-success">
+    <a style="text-decoration:none; color:#ffffff" href="/view?id={{ session['id']}}"> View your account</a>
+</ul>
+{% endif %}
 
-<a href="add_subject?id={{result.id}}">Add another subject</a>
+<ul class="btn btn-success">
+<a style="text-decoration:none; color:#ffffff" href="add_subject?id={{result.id}}">Add another subject</a>
+</ul>
 {% endif %}
 
 

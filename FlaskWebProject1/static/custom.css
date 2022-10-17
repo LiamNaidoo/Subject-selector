@@ -115,7 +115,16 @@ ul {
     transform: translate(-50%, -50%);
 }
 
+.centered {
+    background: #d1cdcd;
+    width: 400px;
+    margin: auto;
+    padding: 30px;
+}
 
+.dark-mode .centered {
+    background-color: #3e3e3e;
+}
 
 .dark-mode {
     background-color: #484848;
