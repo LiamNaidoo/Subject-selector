@@ -2,16 +2,17 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 
-<h1>sign in to see more information</h1>
+<div class="centered">
+    <h1>sign in to see more information</h1>
 
-<!--Form uses a custom div using css-->
-<form class="signupdiv" method="post">
-    <label for="email">email:</label><br>                           
-    <input id="email" name="email" type="email"><br>                
-    <label for="password">Password:</label><br>
-    <input id="password" name="password" type="password"><br>
+    <!--Form uses a custom div using css-->
+    <form class="signupdiv" method="post">
+        <label for="email">email:</label><br>
+        <input id="email" name="email" type="email"><br>
+        <label for="password">Password:</label><br>
+        <input id="password" name="password" type="password"><br>
 
-    <input type="submit" value="Login">
-</form>
-
-{% endblock %}
+        <input type="submit" value="Login">
+    </form>
+</div>
+    {% endblock %}
