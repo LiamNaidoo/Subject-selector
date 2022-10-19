@@ -40,16 +40,25 @@ table {
 
 .styled-table {
     margin: 25px 0;
-    font-size: 0.9em;
+    font-size: 20px;
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgb(0, 0, 0);
+    margin: auto;
+    padding: 12px 15px;
+    min-width:400PX;
+    text-align: center;
 }
 
-form {
-    margin-top: 5px;
-    margin-inline: 15px;
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
 }
+    
+form {
+        margin-top: 5px;
+        margin-inline: 15px;
+    }
 
 ul {
     list-style-type: none;
