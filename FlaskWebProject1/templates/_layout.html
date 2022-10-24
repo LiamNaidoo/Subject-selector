@@ -19,10 +19,10 @@
     <nav>
         <ul>
             {% if 'logged_in' in session %}
-            <li  style="float: right;" class="btn btn-danger btn-lg">
+            <ul class="btn btn-danger btn-lg"  style="float: right;">
 
                 <a style="text-decoration:none; color:#ffffff" href="/logout">Log out</a>
-            </li>
+            </ul>
 
             {% else %}
             <ul class="btn btn-success btn-lg"  style="float: right;">
@@ -31,7 +31,7 @@
             </ul>
             {% endif %}
 
-            <a onclick="darkFunction(),myFunction() " class="btn btn-primary btn-lg"  style="float: right;">
+            <a onclick="darkFunction(),myFunction() " class="btn btn-primary btn-lg">
                 <div id="myDIV">Dark mode</div>
             </a>
 
