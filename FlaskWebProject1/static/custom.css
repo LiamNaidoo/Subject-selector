@@ -1,5 +1,5 @@
 body {
-    background-color: #b5b5b5;
+    background-color: #dfdfdf;
     margin: 0px;
 }
 
@@ -129,6 +129,17 @@ ul {
     width: 400px;
     margin: auto;
     padding: 30px;
+}
+
+.p-3 {
+    text-align: center;
+    background: #efefef;
+    color: #000000 !important;
+}
+
+.dark-mode .p-3 {
+    background: #2b2b2b;
+    color: white !important;
 }
 
 .dark-mode .centered {

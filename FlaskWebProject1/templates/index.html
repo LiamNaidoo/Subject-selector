@@ -3,6 +3,12 @@
 {% block title %} HOME {% endblock title %}
 
 {% block content %}
+
+<div class="mt-0 p-3 text-white">
+    <h1>Home</h1>
+    <p>Information is found here about subjects, choosing subjects, and what they include.</p>
+</div>
+
 <ul class="btn btn-primary">
     <a style="text-decoration:none; color:#ffffff" href="{{ url_for('add')}}">Sign up</a>
 </ul>
@@ -53,7 +59,7 @@
 {% endif %}
 
 <ul class="btn btn-success">
-<a style="text-decoration:none; color:#ffffff" href="add_subject?id={{result.id}}">Add anotDher subject</a>
+    <a style="text-decoration:none; color:#ffffff" href="add_subject?id={{result.id}}">Add anotDher subject</a>
 </ul>
 {% endif %}
 
