@@ -124,6 +124,11 @@ ul {
     transform: translate(-50%, -50%);
 }
 
+
+.btn {
+    margin: 0px 14px;
+}
+
 .centered {
     background: #d1cdcd;
     width: 400px;
